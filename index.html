@@ -13,23 +13,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Font Awesome (Icons) -->
+    <!-- Font Awesome (Ícones) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
     <style>
         /* Paleta de Cores RC (Branco / Verde / Dourado) */
         :root {
             --rc-bg-light: #FFFFFF;      /* Fundo Principal (Branco) */
-            --rc-bg-content: #F9FAFB;    /* Fundo dos Cards/Seções (Cinza Claro) */
-            --rc-bg-dark: #102A27;       /* Fundo Header/Footer/Seção Alternada (Verde Escuro) */
+            --rc-bg-dark: #102A27;       /* Fundo Alternativo (Verde Escuro) */
             
             --rc-text-dark: #1D2939;     /* Texto Principal (Preto/Cinza Escuro) */
-            --rc-text-light: #F9FAFB;     /* Texto Header/Footer/Seção Alternada (Branco) */
+            --rc-text-light: #F9FAFB;     /* Texto Alternativo (Branco) */
             --rc-text-muted: #475467;     /* Texto Secundário (Cinza) */
-            --rc-text-muted-light: #a0b0ab; /* Texto Secundário (em fundo verde) */
+            --rc-text-muted-light: #D0D5DD; /* Texto Secundário (Claro) */
             
             --rc-border-light: #D0D5DD;  /* Bordas (Cinza Claro) */
             
@@ -46,122 +42,89 @@
             color: var(--rc-highlight);
         }
 
-        /* Card de Conteúdo (fundo cinza claro) */
-        .content-card {
-            background-color: var(--rc-bg-content);
-            border-radius: 0.75rem; /* rounded-xl */
-            padding: 2.5rem; /* p-10 */
-            border: 1px solid var(--rc-border-light);
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(0 0 0 / 0.05); /* shadow-lg sutil */
-        }
-        
-        .content-card .card-title {
-            color: var(--rc-text-dark);
-            font-weight: 600;
-        }
-        
-        .content-card p, .content-card li, .content-card td, .content-card th {
-            color: var(--rc-text-muted);
-        }
-        
-        .content-card strong {
-             color: var(--rc-text-dark);
-        }
-
-        /* Seção Alternada (Fundo Verde Escuro) */
-        .section-dark {
-            background-color: var(--rc-bg-dark);
-            color: var(--rc-text-light);
-            padding-top: 5rem;
-            padding-bottom: 5rem;
-            margin-top: 5rem;
-        }
-        
-        .section-dark .section-title {
-            color: var(--rc-text-light); /* Título claro em fundo escuro */
-            margin-bottom: 3rem;
-        }
-        
-        .section-dark .content-card {
-             background-color: #1a3835; /* Verde um pouco mais claro que o fundo */
-             border-color: #2a4c48;
-        }
-        
-        .section-dark .content-card p, .section-dark .content-card li {
-            color: var(--rc-text-muted-light);
-        }
-        .section-dark .content-card strong {
-             color: var(--rc-text-light);
-        }
-        
-        .section-dark .table-rc th, .section-dark .table-rc td {
-            border-bottom: 1px solid #2a4c48;
-        }
-        .section-dark .table-rc th {
-            color: var(--rc-text-light);
-            background-color: #102A27; 
-        }
-        .section-dark .table-rc tbody tr:hover {
-            background-color: #102A27;
-        }
-        .section-dark .placeholder-card {
-            background-color: #1a3835;
-            border-color: #2a4c48;
-            color: var(--rc-text-muted-light);
-        }
-
-        /* Seção Normal (Fundo Branco) */
+        /* Seções de Fundo (alternando) */
         .section-light {
-             padding-top: 5rem; /* pt-20 */
-             margin-top: 5rem; /* mt-20 */
+             background-color: var(--rc-bg-light);
+             color: var(--rc-text-dark);
+             padding-top: 5rem;
+             padding-bottom: 5rem;
         }
-
-        /* Título da Seção (em fundo branco) */
+        .section-dark {
+             background-color: var(--rc-bg-dark);
+             color: var(--rc-text-light);
+             padding-top: 5rem;
+             padding-bottom: 5rem;
+        }
+        
+        /* Título da Seção */
         .section-title {
             font-size: 2.25rem; /* text-4xl */
             line-height: 2.5rem;
             font-weight: 700; /* font-bold */
             text-align: center;
             margin-bottom: 3rem; /* mb-12 */
-            color: var(--rc-text-dark); /* Texto ESCURO */
+        }
+        /* Cor do título para fundo escuro */
+        .section-dark .section-title {
+            color: var(--rc-text-light);
+        }
+        /* Cor do título para fundo claro */
+        .section-light .section-title {
+            color: var(--rc-text-dark);
         }
 
-        .placeholder-card {
-            background-color: #F9FAFB;
+        /* Card de Conteúdo (em fundo claro) */
+        .content-card-light {
+            background-color: #F9FAFB; /* Cinza bem claro */
             color: var(--rc-text-muted);
             border-radius: 0.75rem; /* rounded-xl */
             padding: 2rem; /* p-8 */
             border: 1px solid var(--rc-border-light);
-            text-align: center;
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
         }
         
-        /* Ajuste para células da tabela (em card cinza claro) */
-        .table-rc th, .table-rc td {
+        /* Card de Conteúdo (em fundo escuro) */
+        .content-card-dark {
+            background-color: #1D2939; /* Verde/Azul mais claro */
+            color: var(--rc-text-muted-light);
+            border-radius: 0.75rem; /* rounded-xl */
+            padding: 2rem; /* p-8 */
+            border: 1px solid #344054;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); /* shadow-lg */
+        }
+        
+        /* Tabela (em card claro) */
+        .table-rc-light th, .table-rc-light td {
             padding: 0.75rem;
             border-bottom: 1px solid var(--rc-border-light);
             text-align: left;
         }
-        .table-rc th {
+        .table-rc-light th {
             font-weight: 600;
             color: var(--rc-text-dark);
-            background-color: #FFFFFF; /* Fundo do header da tabela (branco) */
+            background-color: #FFFFFF; 
         }
-        .table-rc tbody tr:last-child td {
-            border-bottom: none;
+        
+        /* Tabela (em card escuro) */
+        .table-rc-dark th, .table-rc-dark td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #344054;
+            text-align: left;
         }
-        .table-rc tbody tr:hover {
-            background-color: #FFFFFF;
+        .table-rc-dark th {
+            font-weight: 600;
+            color: var(--rc-text-light);
+            background-color: #102A27;
         }
-
+        
         /* Estilos do Carrossel */
         .carousel-container {
             width: 100%;
             height: 24rem; /* h-96 */
             overflow: hidden;
+            position: relative;
             border-radius: 0.75rem; /* rounded-xl */
             border: 1px solid var(--rc-border-light);
-            position: relative;
         }
         .carousel-track {
             display: flex;
@@ -171,6 +134,7 @@
         .carousel-slide {
             min-width: 100%;
             height: 100%;
+            cursor: pointer; /* Para o lightbox */
         }
         .carousel-slide img {
             width: 100%;
@@ -179,16 +143,16 @@
         }
         .carousel-dots {
             position: absolute;
-            bottom: 1rem;
+            bottom: 0.5rem; /* bottom-2 */
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            gap: 0.5rem;
+            gap: 0.5rem; /* space-x-2 */
         }
         .carousel-dot {
-            width: 0.75rem;
-            height: 0.75rem;
-            border-radius: 9999px;
+            width: 0.5rem; /* w-2 */
+            height: 0.5rem; /* h-2 */
+            border-radius: 9999px; /* rounded-full */
             background-color: rgba(255, 255, 255, 0.5);
             cursor: pointer;
             transition: background-color 0.3s;
@@ -231,44 +195,38 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            display: none; /* Inicia escondido */
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 999;
+            display: none; /* Começa escondido */
             justify-content: center;
             align-items: center;
-            z-index: 1000;
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
+            padding: 2rem;
         }
         #lightbox-image {
-            max-width: 90vw;
-            max-height: 90vh;
+            max-width: 90%;
+            max-height: 90%;
             object-fit: contain;
-            box-shadow: 0 0 40px rgba(0,0,0,0.5);
+            border-radius: 0.5rem;
         }
         #lightbox-close {
             position: absolute;
-            top: 1.5rem;
+            top: 2rem;
             right: 2rem;
-            font-size: 2.5rem;
-            color: #FFF;
+            color: white;
+            font-size: 2rem;
             cursor: pointer;
-            transition: transform 0.2s;
         }
-        #lightbox-close:hover {
-            transform: scale(1.1);
-        }
-
-
+        
     </style>
 </head>
 <body class="antialiased">
 
-    <!-- Header (Fundo Verde Escuro, Texto Branco) -->
+    <!-- Header (Fundo Verde Escuro) -->
     <header class="sticky top-0 z-50" style="background-color: var(--rc-bg-dark); color: var(--rc-text-light);">
         <div class="container mx-auto max-w-7xl px-4 py-5">
             <div class="flex flex-wrap justify-between items-center gap-4">
                 
-                <!-- Título -->
+                <!-- Logo / Título -->
                 <div>
                     <h2 class="text-2xl font-bold tracking-tight">
                         Estratégia <span class="highlight-gold">Black 400</span>
@@ -276,418 +234,322 @@
                     <p class="text-sm" style="color: var(--rc-text-light);">Análise de Oportunidade: IS Perdizes</p>
                 </div>
                 
-                <!-- Menu de Navegação Rápida (Simplificado) -->
+                <!-- Navegação -->
                 <nav>
                     <div class="flex flex-wrap gap-4">
-                        <!-- <a href="#contexto" class="text-sm font-medium hover:highlight-gold transition-all duration-300" style="color: var(--rc-text-light);">Contexto</a> -->
-                        <a href="#demanda" class="text-sm font-medium hover:highlight-gold transition-all duration-300" style="color: var(--rc-text-light);">Demanda</a>
-                        <a href="#estrategia" class="text-sm font-medium hover:highlight-gold transition-all duration-300" style="color: var(--rc-text-light);">Estratégia</a>
-                        <a href="#performance" class="text-sm font-medium hover:highlight-gold transition-all duration-300" style="color: var(--rc-text-light);">Performance</a>
-                        <a href="#graficos" class="text-sm font-medium hover:highlight-gold transition-all duration-300" style="color: var(--rc-text-light);">Gráficos</a>
-                        <a href="#risco" class="text-sm font-medium hover:highlight-gold transition-all duration-300" style="color: var(--rc-text-light);">Risco</a>
-                        <a href="#conclusao" class="text-sm font-medium hover:highlight-gold transition-all duration-300" style="color: var(--rc-text-light);">Conclusão</a>
+                        <a href="#fotos" class="text-sm font-medium hover:highlight-gold transition-colors" style="color: var(--rc-text-light);">Imóvel</a>
+                        <a href="#demanda" class="text-sm font-medium hover:highlight-gold transition-colors" style="color: var(--rc-text-light);">Demanda</a>
+                        <a href="#estrategia" class="text-sm font-medium hover:highlight-gold transition-colors" style="color: var(--rc-text-light);">Estratégia</a>
+                        <a href="#performance" class="text-sm font-medium hover:highlight-gold transition-colors" style="color: var(--rc-text-light);">Performance</a>
+                        <a href="#risco" class="text-sm font-medium hover:highlight-gold transition-colors" style="color: var(--rc-text-light);">Risco</a>
+                        <a href="#conclusao" class="text-sm font-medium hover:highlight-gold transition-colors" style="color: var(--rc-text-light);">Conclusão</a>
                     </div>
                 </nav>
             </div>
         </div>
     </header>
 
-    <!-- Main Content (Fundo Branco, Texto Escuro) -->
-    <main class="container mx-auto max-w-7xl px-4">
+    <!-- Conteúdo Principal -->
+    <main>
 
-        <!-- TÍTULO PRINCIPAL (Dourado) -->
-        <section id="hero" class="text-center py-12 md:py-20">
-            <h1 class="text-6xl md:text-8xl font-extrabold highlight-gold tracking-tighter">
-                + DE 17% DE LUCRO AO ANO
-            </h1>
-            <p class="text-xl md:text-2xl font-medium" style="color: var(--rc-text-muted);">(projeção de rentabilidade)</p>
+        <!-- Seção Hero (Fundo Branco) -->
+        <section id="hero" class="section-light pt-12 md:pt-20 pb-12">
+            <div class="container mx-auto max-w-7xl px-4 text-center">
+                <h1 class="text-6xl md:text-8xl font-extrabold highlight-gold tracking-tighter">
+                    + DE 17% DE LUCRO AO ANO
+                </h1>
+                <p class="text-xl md:text-2xl font-medium" style="color: var(--rc-text-muted);">(projeção de rentabilidade)</p>
+            </div>
         </section>
 
-        <!-- 1. Fotos do Empreendimento e Detalhes (Fundo Branco) -->
-        <section id="fotos">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
-                <!-- Carrossel de Imagens -->
-                <div id="image-carousel" class="carousel-container shadow-lg">
-                    <div class="carousel-track">
-                        <!-- As imagens serão injetadas aqui pelo JS -->
+        <!-- 1. Fotos e Detalhes (Fundo Branco) -->
+        <section id="fotos" class="section-light pt-0">
+            <div class="container mx-auto max-w-7xl px-4">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
+                    <!-- Carrossel de Imagens -->
+                    <div id="image-carousel" class="carousel-container shadow-lg">
+                        <div class="carousel-track">
+                            <!-- As imagens serão injetadas aqui pelo JS -->
+                        </div>
+                        <div class="carousel-dots">
+                            <!-- Os pontos/indicadores serão injetados aqui -->
+                        </div>
+                        <!-- Botões de Navegação -->
+                        <button id="carousel-prev" class="carousel-btn">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+                        <button id="carousel-next" class="carousel-btn">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
                     </div>
-                    <div class="carousel-dots">
-                        <!-- Os pontos/indicadores serão injetados aqui -->
-                    </div>
-                    <!-- Botões de Navegação -->
-                    <button id="carousel-prev" class="carousel-btn">
-                        <i class="fa-solid fa-chevron-left"></i>
-                    </button>
-                    <button id="carousel-next" class="carousel-btn">
-                        <i class="fa-solid fa-chevron-right"></i>
-                    </button>
-                </div>
 
-                <!-- Detalhes do Imóvel (Texto Escuro) -->
-                <div class="p-4">
-                    <h3 class="text-4xl font-bold mb-6" style="color: var(--rc-text-dark);">IS PERDIZES — Análise Completa RC</h3>
-                    <ul class="space-y-4 text-lg" style="color: var(--rc-text-dark);">
-                        <li class="flex items-center gap-3">
-                            <i class="fa-solid fa-map-pin w-5 text-center highlight-gold"></i>
-                            <strong>Endereço:</strong> Rua Ministro Godói — Perdizes (SP)
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <i class="fa-solid fa-cube w-5 text-center highlight-gold"></i>
-                            <strong>Unidade:</strong> Studio 26 m²
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <i class="fa-solid fa-chair w-5 text-center highlight-gold"></i>
-                            <strong>Status:</strong> Decorado, mobiliado e alugado até 08/10/2026
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <i class="fa-solid fa-money-bill-wave w-5 text-center highlight-gold"></i>
-                            <strong>Aluguel Atual:</strong> R$ 3.785 (bruto) / R$ 2.580,90 (líquido)
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <i class="fa-solid fa-chart-line w-5 text-center highlight-gold"></i>
-                            <strong>Yield Informado:</strong> 9,7% a.a. (bruto) | 7,96% a.a. (líquido)
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <i class="fa-solid fa-tag w-5 text-center highlight-gold"></i>
-                            <strong>Valor Total:</strong> R$ 389.000
-                        </li>
-                    </ul>
-                    <p class="mt-4 text-md highlight-gold font-semibold">
-                        <i class="fa-solid fa-book-reader mr-2"></i> Leitura RC: Ativo pronto, já rentabilizando, com contrato ativo e gestão profissional. Mantém retorno líquido superior à média da cidade.
+                    <!-- Detalhes do Imóvel (Texto Escuro) -->
+                    <div class="p-4">
+                        <h3 class="text-4xl font-bold mb-6" style="color: var(--rc-text-dark);">IS PERDIZES — Análise Completa RC</h3>
+                        <ul class="space-y-4 text-lg" style="color: var(--rc-text-dark);">
+                            <li class="flex items-center gap-3">
+                                <i class="fa-solid fa-map-pin w-5 text-center highlight-gold"></i>
+                                <strong>Endereço:</strong> Rua Ministro Godói — Perdizes (SP)
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fa-solid fa-cube w-5 text-center highlight-gold"></i>
+                                <strong>Unidade:</strong> Studio 26 m²
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fa-solid fa-chair w-5 text-center highlight-gold"></i>
+                                <strong>Status:</strong> Decorado, mobiliado e alugado até 08/10/2026
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fa-solid fa-money-bill-wave w-5 text-center highlight-gold"></i>
+                                <strong>Aluguel Atual:</strong> R$ 3.785 (bruto) / R$ 2.580,90 (líquido)
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fa-solid fa-chart-line w-5 text-center highlight-gold"></i>
+                                <strong>Yield Informado:</strong> 9,7% a.a. (bruto) | 7,96% a.a. (líquido)
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fa-solid fa-tag w-5 text-center highlight-gold"></i>
+                                <strong>Valor Total:</strong> R$ 389.000
+                            </li>
+                        </ul>
+                        <p class="mt-4 text-md highlight-gold font-semibold">
+                            <i class="fa-solid fa-book-reader mr-2"></i> Leitura RC: Ativo pronto, já rentabilizando, com contrato ativo e gestão profissional. Mantém retorno líquido superior à média da cidade.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Pontos Geradores de Demanda (Fundo Verde Escuro) -->
+        <section id="demanda" class="section-dark">
+            <div class="container mx-auto max-w-7xl px-4">
+                <h2 class="section-title">Pontos Geradores de Demanda — Eixo Perdizes / <span class="highlight-gold">Pompeia</span></h2>
+                <div class="content-card-dark overflow-x-auto shadow-lg">
+                    <table class="w-full text-sm table-rc-dark">
+                        <thead>
+                            <tr>
+                                <th>Categoria</th>
+                                <th>Local / Equipamento</th>
+                                <th>Distância (estimada)</th>
+                                <th>Impacto RC</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Educação</td>
+                                <td>PUC-SP – Campus Perdizes</td>
+                                <td>3 min a pé (300 m)</td>
+                                <td>Demanda constante de alunos, professores e intercambistas.</td>
+                            </tr>
+                            <tr>
+                                <td>Cultura & Lazer</td>
+                                <td>Sesc Pompeia</td>
+                                <td>6 min (1 km)</td>
+                                <td>Polo cultural e esportivo do bairro; fluxo diário.</td>
+                            </tr>
+                            <tr>
+                                <td>Eventos</td>
+                                <td>Allianz Parque</td>
+                                <td>7 min (1,2 km)</td>
+                                <td>Arena multiuso; picos de ocupação e ADR em shows e campeonatos.</td>
+                            </tr>
+                            <tr>
+                                <td>Varejo & Entretenimento</td>
+                                <td>Shopping Bourbon Pompeia</td>
+                                <td>5 min (900 m)</td>
+                                <td>Fluxo contínuo de consumo e lazer; reforça ocupação regular.</td>
+                            </tr>
+                            <tr>
+                                <td>Mobilidade</td>
+                                <td>Estação Linha 6–Laranja (Perdizes/SESC Pompeia)</td>
+                                <td>Em implantação</td>
+                                <td>Integração direta com Paulista e Faria Lima; valorização prevista.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="content-card-dark mt-8 p-4 max-w-4xl mx-auto shadow-lg">
+                    <h3 class="text-lg highlight-gold font-semibold mb-2"><i class="fa-solid fa-lightbulb mr-2"></i>Resumo RC:</h3>
+                    <p>
+                        Perdizes combina turismo universitário + lazer/cultura + eventos, colada a eixos corporativos.<br>
+                        Garante base de demanda perene com picos de tarifa em finais de semana e eventos.
                     </p>
                 </div>
             </div>
         </section>
 
-        <!-- [REMOVIDO] 2. Avaliação (Contexto e Localização Estratégica) (Fundo Verde Escuro) -->
-        <!-- <section id="contexto" class="section-dark"> ... </section> -->
-
-        <!-- 3. Tese (Placeholder) -->
-        <section id="tese" class="section-light hidden">
-            <h2 class="section-title">Tese de <span class="highlight-gold">Investimento</span></h2>
-            <div class="placeholder-card max-w-3xl mx-auto">
-                <i class="fa-solid fa-book-open text-4xl mb-4"></i>
-                <h3 class="text-xl font-semibold highlight-gold">Tese de Investimento</h3>
-                <p>Este espaço é um placeholder. O conteúdo da tese está integrado nas seções "Avaliação", "Leitura RC" e "Conclusão".</p>
-            </div>
-        </section>
-
-        <!-- 4. 5 Pilares de Geradores de Demandas (Fundo Branco) -->
-        <section id="demanda" class="section-light">
-            <h2 class="section-title">Pontos Geradores de Demanda — Eixo Perdizes / <span class="highlight-gold">Pompeia</span></h2>
-            <div class="content-card overflow-x-auto">
-                <table class="w-full text-sm table-rc">
-                    <thead>
-                        <tr>
-                            <th>Categoria</th>
-                            <th>Local / Equipamento</th>
-                            <th>Distância (estimada)</th>
-                            <th>Impacto RC</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Educação</td>
-                            <td>PUC-SP – Campus Perdizes</td>
-                            <td>3 min a pé (300 m)</td>
-                            <td>Demanda constante de alunos, professores e intercambistas.</td>
-                        </tr>
-                        <tr>
-                            <td>Cultura & Lazer</td>
-                            <td>Sesc Pompeia</td>
-                            <td>6 min (1 km)</td>
-                            <td>Polo cultural e esportivo do bairro; fluxo diário.</td>
-                        </tr>
-                        <tr>
-                            <td>Eventos</td>
-                            <td>Allianz Parque</td>
-                            <td>7 min (1,2 km)</td>
-                            <td>Arena multiuso; picos de ocupação e ADR em shows e campeonatos.</td>
-                        </tr>
-                        <tr>
-                            <td>Varejo & Entretenimento</td>
-                            <td>Shopping Bourbon Pompeia</td>
-                            <td>5 min (900 m)</td>
-                            <td>Fluxo contínuo de consumo e lazer; reforça ocupação regular.</td>
-                        </tr>
-                        <tr>
-                            <td>Mobilidade</td>
-                            <td>Estação Linha 6–Laranja (Perdizes/SESC Pompeia)</td>
-                            <td>Em implantação</td>
-                            <td>Integração direta com Paulista e Faria Lima; valorização prevista.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="content-card mt-8 p-4 max-w-4xl mx-auto">
-                <h3 class="text-lg highlight-gold font-semibold mb-2"><i class="fa-solid fa-lightbulb mr-2"></i>Resumo RC:</h3>
-                <p>
-                    Perdizes combina turismo universitário + lazer/cultura + eventos, colada a eixos corporativos.<br>
-                    Garante base de demanda perene com picos de tarifa em finais de semana e eventos.
-                </p>
-            </div>
-        </section>
-
-        <!-- 5. Eventos + Link Airbnb (Fundo Verde Escuro) -->
-        <section id="eventos-impacto" class="section-dark">
+        <!-- 6. Eventos Âncora e Golden (Fundo Branco) -->
+        <section id="eventos-impacto" class="section-light">
             <div class="container mx-auto max-w-7xl px-4">
-                 <h2 class="section-title">Eventos Âncora e Golden — Impacto no <span class="highlight-gold">RevPAR</span></h2>
-                
+                <h2 class="section-title">Eventos Âncora e Golden — Impacto no <span class="highlight-gold">RevPAR</span></h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <!-- Card Eventos Âncora -->
-                    <div class="content-card p-6">
-                        <div class="flex items-center gap-3 mb-4">
-                            <i class="fa-solid fa-calendar-check text-2xl highlight-gold"></i>
-                            <h3 class="text-2xl font-semibold text-white">Eventos Âncora</h3>
-                        </div>
-                        <p class="mb-4">Aumentam ADR e ocupação em toda a cidade:</p>
-                        <ul class="space-y-2 text-sm">
-                            <li class="flex gap-2"><i class="fa-solid fa-check text-xs highlight-gold mt-1"></i> Lollapalooza</li>
-                            <li class="flex gap-2"><i class="fa-solid fa-check text-xs highlight-gold mt-1"></i> SP-Arte</li>
-                            <li class="flex gap-2"><i class="fa-solid fa-check text-xs highlight-gold mt-1"></i> Bienal do Livro</li>
-                            <li class="flex gap-2"><i class="fa-solid fa-check text-xs highlight-gold mt-1"></i> Hospitalar / Futurecom</li>
-                            <li class="flex gap-2"><i class="fa-solid fa-check text-xs highlight-gold mt-1"></i> Feiras no Expo SP / Expo Norte</li>
+                    <!-- Eventos Âncora -->
+                    <div class="content-card-light">
+                        <h3 class="text-2xl font-bold mb-4 flex items-center gap-3"><i class="fa-solid fa-anchor highlight-gold"></i> Eventos Âncora</h3>
+                        <p class="mb-4">Aumentam ADR e ocupação em toda a cidade.</p>
+                        <ul class="space-y-2 list-disc list-inside">
+                            <li>Lollapalooza</li>
+                            <li>SP-Arte</li>
+                            <li>Bienal do Livro</li>
+                            <li>Hospitalar / Futurecom</li>
+                            <li>Feiras no Expo SP / Expo Norte</li>
                         </ul>
                     </div>
-                    <!-- Card Eventos Golden -->
-                    <div class="content-card p-6">
-                         <div class="flex items-center gap-3 mb-4">
-                            <i class="fa-solid fa-star text-2xl highlight-gold"></i>
-                            <h3 class="text-2xl font-semibold text-white">Eventos Golden</h3>
-                        </div>
-                        <p class="mb-4">Efeito direto no micro de Perdizes–Pompeia:</p>
-                        <ul class="space-y-2 text-sm">
-                            <li class="flex gap-2"><i class="fa-solid fa-check text-xs highlight-gold mt-1"></i> GP de F1 (Interlagos)</li>
-                            <li class="flex gap-2"><i class="fa-solid fa-check text-xs highlight-gold mt-1"></i> Turnês Internacionais (Allianz)</li>
-                            <li class="flex gap-2"><i class="fa-solid fa-check text-xs highlight-gold mt-1"></i> UFC</li>
-                            <li class="flex gap-2"><i class="fa-solid fa-check text-xs highlight-gold mt-1"></i> Fórmula E</li>
+                    <!-- Eventos Golden -->
+                    <div class="content-card-light">
+                        <h3 class="text-2xl font-bold mb-4 flex items-center gap-3"><i class="fa-solid fa-star highlight-gold"></i> Eventos Golden</h3>
+                        <p class="mb-4">Efeito direto no micro de Perdizes–Pompeia.</p>
+                        <ul class="space-y-2 list-disc list-inside">
+                            <li>GP de F1 (Interlagos)</li>
+                            <li>Turnês Internacionais (Allianz/Morumbi)</li>
+                            <li>UFC</li>
+                            <li>Fórmula E</li>
                         </ul>
                     </div>
                 </div>
-
-                <div class="content-card mt-8 p-4 max-w-4xl mx-auto">
+                <div class="content-card-light mt-8 p-4 max-w-4xl mx-auto">
                     <h3 class="text-lg highlight-gold font-semibold mb-2"><i class="fa-solid fa-chart-line mr-2"></i>Interpretação RC:</h3>
                     <p>
                         Os shows e eventos no Allianz e região elevam o ADR local em <strong class="highlight-gold">40–100% nos períodos de pico.</strong>
                     </p>
                 </div>
                 
-                <!-- Link Airbnb Placeholder -->
-                <div class="placeholder-card flex flex-col justify-center items-center mt-8">
-                    <i class="fa-brands fa-airbnb text-4xl mb-4"></i>
-                    <h3 class="text-xl font-semibold" style="color: var(--rc-text-light);">Exemplo Airbnb na Região</h3>
-                    <p>Link de exemplo de um anúncio similar na mesma região para benchmark de preço e ocupação.</p>
-                    <a href="https://www.airbnb.com.br/rooms/1087068082661504567?source_impression_id=p3_1762196599_P3nMB9_esqaWUFWg" target="_blank" rel="noopener noreferrer" class="mt-4 px-4 py-2 rounded-md font-semibold highlight-gold" style="background-color: #fcb90020;">Ver Exemplo</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- 6. Diferenciais (Placeholder) -->
-        <section id="diferenciais" class="section-light hidden">
-            <h2 class="section-title">Diferenciais do <span class="highlight-gold">Ativo</span></h2>
-            <div class="placeholder-card max-w-3xl mx-auto">
-                <i class="fa-solid fa-star text-4xl mb-4"></i>
-                <h3 class="text-xl font-semibold" style="color: var(--rc-text-dark);">Diferenciais</h3>
-                <p>Placeholder para os diferenciais competitivos do imóvel.</p>
-            </div>
-        </section>
-
-        <!-- 7. Projeção (Estratégia Black 400 e Cenários) (Fundo Branco) -->
-        <section id="estrategia" class="section-light">
-            <h2 class="section-title">Estratégia <span class="highlight-gold">Black 400</span></h2>
-            <div class="content-card max-w-4xl mx-auto">
-                <h3 class="text-xl font-semibold highlight-gold mb-4">Regra RC (ajustada):</h3>
-                <ul class="space-y-2 text-md">
-                    <li><i class="fa-solid fa-circle-check highlight-gold mr-2"></i> <strong>Crédito alvo:</strong> R$ 400.000</li>
-                    <!-- <li><i class="fa-solid fa-circle-check highlight-gold mr-2"></i> <strong>Fórmula:</strong> Crédito × 0,7 = saldo coberto → 400.000 × 0,7 = R$ 280.000</li> -->
-                    <li><i class="fa-solid fa-circle-check highlight-gold mr-2"></i> <strong>Capital próprio (R$ 150–200 mil):</strong> lance + custos + ITBI/cartório + reserva.</li>
-                    <li><i class="fa-solid fa-circle-check highlight-gold mr-2"></i> <strong>Valorização Média:</strong> 6% a.a. (usada na projeção de reajuste de parcela).</li>
-                </ul>
-                <h3 class="text-xl font-semibold highlight-gold mt-6 mb-4">Cenário tático:</h3>
-                <div class="overflow-x-auto rounded-xl border" style="border-color: var(--rc-border-light);">
-                    <table class="w-full text-sm table-rc">
-                        <thead>
-                            <tr>
-                                <th>Item</th>
-                                <th>Valor</th>
-                                <th>Observação</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Preço do ativo</td>
-                                <td>R$ 389.000</td>
-                                <td>-</td>
-                            </tr>
-                            <tr>
-                                <td>Carta contemplada</td>
-                                <td>R$ 400.000</td>
-                                <td>de 120 a 200k</td>
-                            </tr>
-                            <tr>
-                                <td>Parcela pós contemplação</td>
-                                <td>de 1700 a 2200</td>
-                                <td>Projeção</td>
-                            </tr>
-                            <tr>
-                                <td>Equity alocado</td>
-                                <td>R$ 150–200 mil</td>
-                                <td>Faixa solicitada</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <p class="mt-2 text-sm text-right" style="color: var(--rc-text-muted);">
-                    <i class="fa-solid fa-info-circle mr-1"></i> Valores de parcela e capital são projeções e podem mudar.
-                </p>
-                <p class="mt-4 text-md highlight-gold font-semibold">
-                    <i class="fa-solid fa-book-reader mr-2"></i> Leitura RC: Permite alavancar o ativo pronto com ticket reduzido, usando consórcio contemplado e rentabilidade imediata.
-                </p>
-            </div>
-            
-            <h2 class="section-title mt-20">Cenários de Performance — Rentabilidade e <span class="highlight-gold">Alavancagem</span></h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-                
-                <!-- Card 1: Cenário A (Long-Stay Yuca) (Fundo Cinza Claro) -->
-                <div class="content-card p-8">
-                    <span class="inline-block px-3 py-1 text-sm font-semibold rounded-full" style="background-color: #E4E7EC; color: var(--rc-text-muted);">
-                        Cenário A
-                    </span>
-                    <h3 class="text-2xl font-bold mt-4" style="color: var(--rc-text-dark);">Manter Contrato Atual (Yuca)</h3>
-                    <p class="text-lg -mt-1" style="color: var(--rc-text-muted);">(Contrato vigente até Out/2026)</p>
-                    <div class="mt-6">
-                        <p class="text-5xl md:text-6xl font-extrabold highlight-gold">~5.8<span class="text-4xl">%</span></p>
-                        <p class="text-lg font-medium">Cash-on-cash a.a. (com R$150k)</p>
-                        <!-- <p class="text-2xl font-bold mt-1" style="color: var(--rc-text-muted);">Fluxo R$ 724,20/mês</p> -->
+                <!-- Link Airbnb -->
+                <div class="content-card-light flex flex-col md:flex-row justify-between items-center mt-8 gap-4">
+                    <div class="text-center md:text-left">
+                        <i class="fa-brands fa-airbnb text-4xl mb-2 highlight-gold"></i>
+                        <h3 class="text-xl font-semibold" style="color: var(--rc-text-dark);">Exemplo Airbnb na Região</h3>
+                        <p>Benchmark de preço e ocupação de um ativo similar.</p>
                     </div>
-                    <hr class="my-6" style="border-color: var(--rc-border-light);"/>
-                    <ul class="space-y-3">
-                        <li><strong>Líquido:</strong> R$ 2.580,90/mês</li>
-                        <!-- <li><strong>Cap rate:</strong> 7,96% a.a.</li> -->
-                        <!-- <li><strong>Após parcela consórcio (400k):</strong> R$ 724,20/mês</li> -->
-                        <li><strong>Cash-on-cash (R$ 150k):</strong> 5,8% a.a.</li>
-                        <li><strong>Cash-on-cash (R$ 200k):</strong> 4,3% a.a.</li>
-                    </ul>
-                    <p class="mt-4 text-md highlight-gold font-semibold">
-                        <i class="fa-solid fa-book-reader mr-2"></i> Leitura RC: Renda cobre a parcela e ainda gera saldo positivo — tese conservadora e sustentável até 10/2026.
-                    </p>
-                </div>
-                
-                <!-- Card 2: Cenário B (Short-Stay Operação RC) (Fundo Cinza Claro com Borda Dourada) -->
-                <div class="content-card p-8 border-2" style="border-color: var(--rc-highlight);">
-                    <span class="inline-block px-3 py-1 text-sm font-semibold rounded-full highlight-gold" style="background-color: #fcb90020;">
-                        Cenário B - Oportunidade
-                    </span>
-                    <h3 class="text-2xl font-bold mt-4" style="color: var(--rc-text-dark);">Pós-Contrato (Short-Stay RC)</h3>
-                    <div class="mt-6">
-                        <p class="text-5xl md:text-6xl font-extrabold highlight-gold">~21.1<span class="text-4xl">%</span></p>
-                        <p class="text-lg font-medium">Cash-on-cash a.a. (com R$150k)</p>
-                        <p class="text-2xl font-bold mt-1 highlight-gold">Fluxo R$ 2.640/mês</p>
-                    </div>
-                    <hr class="my-6" style="border-color: var(--rc-border-light);"/>
-                    <ul class="space-y-3">
-                        <li><strong>Líquido RC:</strong> R$ 4.496/mês</li>
-                        <li><strong>Cap rate:</strong> 13,9% a.a.</li>
-                        <li><strong>Fluxo pós-parcela:</strong> R$ 2.640/mês</li>
-                        <li><strong>Cash-on-cash (R$ 150k):</strong> 21,1% a.a.</li>
-                        <li><strong>Cash-on-cash (R$ 200k):</strong> 15,8% a.a.</li>
-                    </ul>
-                    <p class="mt-4 text-md highlight-gold font-semibold">
-                        <i class="fa-solid fa-book-reader mr-2"></i> Leitura RC: Com gestão ativa, o ativo atinge rentabilidade expressiva sobre o capital próprio.
-                    </p>
-                </div>
-            </div>
-             <p class="mt-8 text-sm text-center" style="color: var(--rc-text-muted);">
-                <i class="fa-solid fa-exclamation-triangle mr-1"></i> Premissas: condomínio permite STR; transição operacional planejada após o término do contrato atual.
-            </p>
-        </section>
-
-        <!-- 8. Localização (Placeholder) -->
-        <section id="localizacao" class="section-light hidden">
-            <h2 class="section-title">Localização & <span class="highlight-gold">Vizinhança</span></h2>
-            <div class="text-center max-w-3xl mx-auto">
-                <p class="mt-4 text-lg" style="color: var(--rc-text-muted);">
-                    Integrado à seção "Contexto e Localização Estratégica".
-                </p>
-                
-                <!-- Placeholder do Mapa -->
-                <div class="w-full h-80 rounded-xl mt-8 flex items-center justify-center content-card">
-                    <i class="fa-solid fa-map-marked-alt text-6xl" style="color: var(--rc-text-muted);"></i>
-                    <p class="ml-4" style="color: var(--rc-text-muted);">Placeholder para Google Maps</p>
+                    <a href="https://www.airbnb.com.br/rooms/1087068082661504567?source_impression_id=p3_1762196599_P3nMB9_esqaWUFWg" target="_blank" rel="noopener noreferrer" class="mt-4 md:mt-0 px-6 py-3 rounded-lg font-semibold highlight-gold whitespace-nowrap" style="background-color: #fcb90020; transition: background-color 0.3s;">
+                        Ver Exemplo de Anúncio
+                        <i class="fa-solid fa-arrow-up-right-from-square ml-2"></i>
+                    </a>
                 </div>
             </div>
         </section>
 
-        <!-- 9. Ficha Tecnica (Placeholder) -->
-        <section id="ficha-tecnica" class="section-light hidden">
-            <h2 class="section-title">Ficha <span class="highlight-gold">Técnica</span></h2>
-            <div class="placeholder-card max-w-3xl mx-auto">
-                <i class="fa-solid fa-list-check text-4xl mb-4"></i>
-                <h3 class="text-xl font-semibold" style="color: var(--rc-text-dark);">Ficha Técnica</h3>
-                <p>Detalhes técnicos do empreendimento: Incorporadora, Ano de construção, Arquitetura, Nº de unidades, etc.</p>
-            </div>
-        </section>
-
-        <!-- 10. Indicadores (Placeholder) -->
-        <section id="indicadores" class="section-light hidden">
-            <h2 class="section-title">Indicadores <span class="highlight-gold">de Mercado</span></h2>
-            <div class="placeholder-card max-w-3xl mx-auto">
-                <i class="fa-solid fa-chart-line text-4xl mb-4"></i>
-                <h3 class="text-xl font-semibold" style="color: var(--rc-text-dark);">Indicadores Chave</h3>
-                <p>Espaço para indicadores de mercado da região (Ex: Valor do m², Variação de preço, etc.).</p>
-            </div>
-        </section>
-
-        <!-- 11. Graficos (Fundo Verde Escuro) -->
-        <section id="graficos" class="section-dark">
+        <!-- 4. Estratégia Black 400 (Fundo Verde Escuro) -->
+        <section id="estrategia" class="section-dark">
             <div class="container mx-auto max-w-7xl px-4">
-                <h2 class="section-title">Gráficos de <span class="highlight-gold">Performance</span></h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <h2 class="section-title">Estratégia <span class="highlight-gold">Black 400</span></h2>
+                <div class="content-card-dark max-w-4xl mx-auto shadow-lg">
+                    <h3 class="text-xl font-semibold highlight-gold mb-4">Regra RC (ajustada):</h3>
+                    <ul class="space-y-2 text-md mb-6">
+                        <li><i class="fa-solid fa-circle-check highlight-gold mr-2"></i> <strong>Crédito alvo:</strong> R$ 400.000</li>
+                        <li><i class="fa-solid fa-circle-check highlight-gold mr-2"></i> <strong>Capital próprio (R$ 150–200 mil):</strong> lance + custos + ITBI/cartório + reserva.</li>
+                        <li><i class="fa-solid fa-circle-check highlight-gold mr-2"></i> <strong>Valorização Média:</strong> Projeção de 6% a.a. de valorização média da parcela.</li>
+                    </ul>
                     
-                    <!-- Gráfico 1: Donut (Receita Líquida) -->
-                    <div class="content-card p-6">
-                        <h3 class="text-xl font-semibold highlight-gold mb-4 text-center">Receita Líquida Mensal (Base vs. RC)</h3>
-                        <canvas id="donutChart"></canvas>
+                    <h3 class="text-xl font-semibold highlight-gold mt-6 mb-4">Cenário tático:</h3>
+                    <div class="overflow-x-auto rounded-xl border" style="border-color: #344054;">
+                        <table class="w-full text-sm table-rc-dark">
+                            <thead>
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Valor</th>
+                                    <th>Observação</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Preço do ativo</td>
+                                    <td>R$ 389.000</td>
+                                    <td>Imóvel pronto</td>
+                                </tr>
+                                <tr>
+                                    <td>Lance (Capital Próprio)</td>
+                                    <td>R$ 120.000 - R$ 200.000</td>
+                                    <td>Para contemplação da carta de 400k</td>
+                                </tr>
+                                <tr>
+                                    <td>Parcela Pós-Contemplação</td>
+                                    <td>R$ 1.700 - R$ 2.200</td>
+                                    <td>(Projeção com 6% a.a. de valorização)</td>
+                                </tr>
+                                <tr>
+                                    <td>Equity alocado</td>
+                                    <td>R$ 150–200 mil</td>
+                                    <td>(Lance + Custos + Reserva)</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                    
-                    <!-- Gráfico 2: Barras (Indicadores) -->
-                    <div class="content-card p-6">
-                        <h3 class="text-xl font-semibold highlight-gold mb-4 text-center">Indicadores de Operação (Base vs. RC)</h3>
-                        <canvas id="barChart"></canvas>
-                    </div>
+                    <p class="mt-4 text-sm" style="color: var(--rc-text-muted-light);">
+                        <i class="fa-solid fa-info-circle mr-1"></i> Valores de parcela e capital são projeções e podem mudar conforme administradora e plano.
+                    </p>
+                    <p class="mt-4 text-md highlight-gold font-semibold">
+                        <i class="fa-solid fa-book-reader mr-2"></i> Leitura RC: Permite alavancar o ativo pronto com ticket reduzido, usando consórcio contemplado e rentabilidade imediata.
+                    </p>
                 </div>
             </div>
         </section>
-
-        <!-- 12. Fluxo de Pagamento (Placeholder) (Fundo Branco) -->
-        <section id="fluxo" class="section-light">
-            <h2 class="section-title">Fluxo de <span class="highlight-gold">Pagamento</span></h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                
-                <!-- Planta 1 -->
-                <div class="placeholder-card">
-                    <i class="fa-solid fa-image text-6xl mb-4"></i>
-                    <h3 class="text-xl font-semibold" style="color: var(--rc-text-dark);">Planta 1</h3>
-                    <button class="mt-4 px-4 py-2 rounded-md font-semibold" style="background-color: var(--rc-border-light); color: var(--rc-text-dark);">Ver Fluxo Detalhado</button>
+        
+        <!-- 5. Cenários de Performance (Fundo Branco) -->
+        <section id="performance" class="section-light">
+            <div class="container mx-auto max-w-7xl px-4">
+                <h2 class="section-title">Cenários de Performance — Rentabilidade e <span class="highlight-gold">Alavancagem</span></h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+                    
+                    <!-- Cenário A (Card Claro) -->
+                    <div class="content-card-light p-8">
+                        <span class="inline-block px-3 py-1 text-sm font-semibold rounded-full" style="background-color: #E4E7EC; color: var(--rc-text-muted);">
+                            Cenário A
+                        </span>
+                        <h3 class="text-2xl font-bold mt-4" style="color: var(--rc-text-dark);">Manter Contrato Atual (Yuca)</h3>
+                        <p class="text-lg -mt-1" style="color: var(--rc-text-muted);">(Contrato vigente até Out/2026)</p>
+                        <div class="mt-6">
+                            <p class="text-5xl md:text-6xl font-extrabold highlight-gold">~5.8<span class="text-4xl">%</span></p>
+                        </div>
+                        <hr class="my-6" style="border-color: var(--rc-border-light);"/>
+                        <ul class="space-y-3">
+                            <li><strong>Líquido:</strong> R$ 2.580,90/mês</li>
+                            <!-- Linhas de CoC removidas -->
+                        </ul>
+                        <p class="mt-4 text-md highlight-gold font-semibold">
+                            <i class="fa-solid fa-book-reader mr-2"></i> Leitura RC: Renda cobre a parcela e ainda gera saldo positivo — tese conservadora e sustentável até 10/2026.
+                        </p>
+                    </div>
+                    
+                    <!-- Cenário B (Card Claro com borda dourada) -->
+                    <div class="content-card-light p-8 border-2" style="border-color: var(--rc-highlight);">
+                        <span class="inline-block px-3 py-1 text-sm font-semibold rounded-full highlight-gold" style="background-color: #fcb90020;">
+                            Cenário B - Oportunidade
+                        </span>
+                        <h3 class="text-2xl font-bold mt-4" style="color: var(--rc-text-dark);">Pós-Contrato (Short-Stay RC)</h3>
+                        <div class="mt-6">
+                            <p class="text-5xl md:text-6xl font-extrabold highlight-gold">~21.1<span class="text-4xl">%</span></p>
+                            <p class="text-2xl font-bold mt-1 highlight-gold">Líquido R$ 4.496/mês</p>
+                        </div>
+                        <hr class="my-6" style="border-color: var(--rc-border-light);"/>
+                        <ul class="space-y-3">
+                            <li><strong>Líquido RC:</strong> R$ 4.496/mês</li>
+                            <li><strong>Cash-on-cash (R$ 150k):</strong> 21,1% a.a.</li>
+                            <li><strong>Cash-on-cash (R$ 200k):</strong> 15,8% a.a.</li>
+                        </ul>
+                        <p class="mt-4 text-md highlight-gold font-semibold">
+                            <i class="fa-solid fa-book-reader mr-2"></i> Leitura RC: Com gestão ativa, o ativo atinge rentabilidade expressiva sobre o capital próprio.
+                        </p>
+                    </div>
                 </div>
-                
-                <!-- Planta 2 -->
-                <div class="placeholder-card">
-                    <i class="fa-solid fa-image text-6xl mb-4"></i>
-                    <h3 class="text-xl font-semibold" style="color: var(--rc-text-dark);">Planta 2</h3>
-                    <button class="mt-4 px-4 py-2 rounded-md font-semibold" style="background-color: var(--rc-border-light); color: var(--rc-text-dark);">Ver Fluxo Detalhado</button>
-                </div>
-            </div>
-            <div class="text-center mt-8">
-                <p style="color: var(--rc-text-muted);">(Seção para selecionar e somar fluxos)</p>
+                <p class="mt-8 text-sm text-center" style="color: var(--rc-text-muted);">
+                    <i class="fa-solid fa-exclamation-triangle mr-1"></i> Premissas: condomínio permite STR; transição operacional planejada após o término do contrato atual.
+                </p>
             </div>
         </section>
 
-        <!-- 13. Sintese (Conclusão RC) (Fundo Verde Escuro) -->
-        <section id="conclusao" class="section-dark">
-             <div class="container mx-auto max-w-7xl px-4">
+        <!-- 12. Fluxo de Pagamento (Fundo Verde Escuro) -->
+        <!-- SEÇÃO REMOVIDA
+        <section id="fluxo" class="section-dark">
+...
+        </section>
+        -->
+
+        <!-- 9. Conclusão RC (Fundo Branco) -->
+        <section id="conclusao" class="section-light">
+            <div class="container mx-auto max-w-7xl px-4">
                 <h2 class="section-title">Conclusão <span class="highlight-gold">RC</span></h2>
-                <div class="content-card p-6 max-w-4xl mx-auto">
+                <div class="content-card-light p-6 max-w-4xl mx-auto">
                     <ul class="space-y-3 text-lg mb-6">
                         <li class="flex items-start gap-3">
                             <i class="fa-solid fa-check highlight-gold mt-1"></i>
@@ -710,83 +572,77 @@
                         <p><strong>Risco Operacional:</strong> <span class="highlight-gold font-bold">8,5/10</span></p>
                     </div>
                     <p class="mt-6 text-2xl font-bold text-center highlight-gold">Atratividade Geral: AAA – Ativo Prime RC</p>
-                    <p class="mt-4 text-xl font-semibold text-center italic">
+                    <p class="mt-4 text-xl font-semibold text-center italic" style="color: var(--rc-text-muted);">
                         Selo RC: “Alta rentabilidade com dupla fase de ganho: renda e valorização.”
                     </p>
                 </div>
             </div>
         </section>
 
-        <!-- 14. Análise de Risco (Incorporadora) (Fundo Branco) -->
-        <section id="risco" class="section-light">
-            <h2 class="section-title">Análise de <span class="highlight-gold">Risco RC</span></h2>
-            <div class="content-card overflow-x-auto">
-                <table class="w-full text-sm table-rc">
-                    <thead>
-                        <tr>
-                            <th>Fator</th>
-                            <th>Avaliação</th>
-                            <th>Justificativa</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Solidez da operação</td>
-                            <td class="font-semibold" style="color: #15803d;">Boa</td>
-                            <td>Unidade já alugada e mobiliada; ativo pronto.</td>
-                        </tr>
-                        <tr>
-                            <td>Localização</td>
-                            <td class="font-semibold" style="color: #15803d;">Excelente</td>
-                            <td>Atrás da PUC-SP, eixo metrô Linha 6 e Allianz Parque.</td>
-                        </tr>
-                        <tr>
-                            <td>Valorização</td>
-                            <td class="font-semibold" style="color: #15803d;">Alta</td>
-                            <td>Expansão metroviária e requalificação do entorno.</td>
-                        </tr>
-                        <tr>
-                            <td>Liquidez futura</td>
-                            <td class="font-semibold" style="color: #15803d;">Alta</td>
-                            <td>Studios ≤30 m² são os mais líquidos da zona oeste.</td>
-                        </tr>
-                        <tr>
-                            <td>Exposição operacional</td>
-                            <td class="font-semibold" style="color: #B45309;">Média</td>
-                            <td>Confirmar regulamentação STR.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <!-- 15. Gestoras (Placeholder) (Fundo Verde Escuro) -->
-        <section id="gestoras" class="section-dark">
-             <div class="container mx-auto max-w-7xl px-4">
-                <h2 class="section-title">Gestoras <span class="highlight-gold">Parceiras</span></h2>
-                <div class="placeholder-card max-w-3xl mx-auto">
-                    <i class="fa-solid fa-handshake text-4xl mb-4"></i>
-                    <h3 class="text-xl font-semibold" style="color: var(--rc-text-light);">Gestoras de Short-Stay</h3>
-                    <p>Informações sobre as gestoras de operação parceiras da RC.</p>
+        <!-- 8. Análise de Risco RC (Fundo Verde Escuro) -->
+        <section id="risco" class="section-dark">
+            <div class="container mx-auto max-w-7xl px-4">
+                <h2 class="section-title">Análise de <span class="highlight-gold">Risco RC</span></h2>
+                <div class="content-card-dark overflow-x-auto shadow-lg">
+                    <table class="w-full text-sm table-rc-dark">
+                        <thead>
+                            <tr>
+                                <th>Fator</th>
+                                <th>Avaliação</th>
+                                <th>Justificativa</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Solidez da operação</td>
+                                <td class="font-semibold" style="color: #32D583;">Boa</td>
+                                <td>Unidade já alugada e mobiliada; ativo pronto.</td>
+                            </tr>
+                            <tr>
+                                <td>Localização</td>
+                                <td class="font-semibold" style="color: #32D583;">Excelente</td>
+                                <td>Atrás da PUC-SP, eixo metrô Linha 6 e Allianz Parque.</td>
+                            </tr>
+                            <tr>
+                                <td>Valorização</td>
+                                <td class="font-semibold" style="color: #32D583;">Alta</td>
+                                <td>Expansão metroviária e requalificação do entorno.</td>
+                            </tr>
+                            <tr>
+                                <td>Liquidez futura</td>
+                                <td class="font-semibold" style="color: #32D583;">Alta</td>
+                                <td>Studios ≤30 m² são os mais líquidos da zona oeste.</td>
+                            </tr>
+                            <tr>
+                                <td>Exposição operacional</td>
+                                <td class="font-semibold" style="color: #F79009;">Média</td>
+                                <td>Confirmar regulamentação STR.</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </section>
 
-        <!-- 16. Fornecedor (Decoração) (Placeholder) (Fundo Branco) -->
-        <section id="fornecedor" class="section-light">
-            <h2 class="section-title">Fornecedores <span class="highlight-gold">(Decoração)</span></h2>
-            <div class="placeholder-card max-w-3xl mx-auto">
-                <i class="fa-solid fa-paint-roller text-4xl mb-4"></i>
-                <h3 class="text-xl font-semibold" style="color: var(--rc-text-dark);">Decoração e Mobília</h3>
-                <p>Detalhes sobre fornecedores para mobília e decoração do studio.</p>
-            </div>
+        <!-- 15. Gestoras (Fundo Branco) -->
+        <!-- SEÇÃO REMOVIDA
+        <section id="gestoras" class="section-light">
+...
         </section>
+        -->
+
+        <!-- 16. Fornecedor (Fundo Verde Escuro) -->
+        <!-- SEÇÃO REMOVIDA
+        <section id="fornecedor" class="section-dark">
+...
+        </section>
+        -->
         
-        <!-- 7. Checklist RC (aqui porque a ordem foi ajustada) (Fundo Verde Escuro) -->
-        <section id="checklist" class="section-dark">
-             <div class="container mx-auto max-w-7xl px-4">
+        <!-- 7. Checklist RC (Fundo Branco) -->
+        <section id="checklist" class="section-light">
+            <div class="container mx-auto max-w-7xl px-4">
                 <h2 class="section-title"><span class="highlight-gold">Checklist RC</span> — Pronto para execução</h2>
-                <div class="content-card p-6 max-w-4xl mx-auto">
+                <div class="content-card-light p-6 max-w-4xl mx-auto">
                     <ul class="space-y-4 text-lg">
                         <li class="flex items-start gap-3">
                             <i class="fa-solid fa-check-circle w-5 text-center highlight-gold mt-1"></i>
@@ -813,28 +669,30 @@
             </div>
         </section>
 
-        <!-- 10. Referências e Fontes (Fundo Branco) -->
-        <section id="referencias" class="section-light">
-            <h2 class="section-title">Referências e <span class="highlight-gold">Fontes</span></h2>
-            <div class="content-card p-6 max-w-4xl mx-auto">
-                <ul class="space-y-3 text-md">
-                    <li class="flex items-start gap-3"><i class="fa-solid fa-link w-4 text-center highlight-gold mt-1"></i>PUC-SP – Rua Monte Alegre, 984</li>
-                    <li class="flex items-start gap-3"><i class="fa-solid fa-link w-4 text-center highlight-gold mt-1"></i>Sesc Pompeia – Rua Clélia, 93</li>
-                    <li class="flex items-start gap-3"><i class="fa-solid fa-link w-4 text-center highlight-gold mt-1"></i>Allianz Parque – Av. Francisco Matarazzo, 1705</li>
-                    <li class="flex items-start gap-3"><i class="fa-solid fa-link w-4 text-center highlight-gold mt-1"></i>Bourbon Shopping Pompeia – Rua Palestra Itália, 500</li>
-                    <li class="flex items-start gap-3"><i class="fa-solid fa-link w-4 text-center highlight-gold mt-1"></i>Linha 6–Laranja – Estação SESC Pompeia (em implantação)</li>
-                    <li class="flex items-start gap-3"><i class="fa-solid fa-chart-simple w-4 text-center highlight-gold mt-1"></i>Parâmetros de operação: Benchmarks RC SP 2025</li>
-                    <li class="flex items-start gap-3"><i class="fa-solid fa-bullhorn w-4 text-center highlight-gold mt-1"></i>Receita e yield: dados do anúncio (cliente RC)</li>
-                </ul>
+        <!-- 10. Referências (Fundo Verde Escuro) -->
+        <section id="referencias" class="section-dark">
+            <div class="container mx-auto max-w-7xl px-4">
+                <h2 class="section-title">Referências e <span class="highlight-gold">Fontes</span></h2>
+                <div class="content-card-dark p-6 max-w-4xl mx-auto shadow-lg">
+                    <ul class="space-y-3 text-md">
+                        <li class="flex items-start gap-3"><i class="fa-solid fa-link w-4 text-center highlight-gold mt-1"></i>PUC-SP – Rua Monte Alegre, 984</li>
+                        <li class="flex items-start gap-3"><i class="fa-solid fa-link w-4 text-center highlight-gold mt-1"></i>Sesc Pompeia – Rua Clélia, 93</li>
+                        <li class="flex items-start gap-3"><i class="fa-solid fa-link w-4 text-center highlight-gold mt-1"></i>Allianz Parque – Av. Francisco Matarazzo, 1705</li>
+                        <li class="flex items-start gap-3"><i class="fa-solid fa-link w-4 text-center highlight-gold mt-1"></i>Bourbon Shopping Pompeia – Rua Palestra Itália, 500</li>
+                        <li class="flex items-start gap-3"><i class="fa-solid fa-link w-4 text-center highlight-gold mt-1"></i>Linha 6–Laranja – Estação SESC Pompeia (em implantação)</li>
+                        <li class="flex items-start gap-3"><i class="fa-solid fa-chart-simple w-4 text-center highlight-gold mt-1"></i>Parâmetros de operação: Benchmarks RC SP 2025</li>
+                        <li class="flex items-start gap-3"><i class="fa-solid fa-bullhorn w-4 text-center highlight-gold mt-1"></i>Receita e yield: dados do anúncio (cliente RC)</li>
+                    </ul>
+                </div>
             </div>
         </section>
 
     </main>
 
-    <!-- Footer (Fundo Verde Escuro, Texto Branco) -->
-    <footer class="mt-20 md:mt-28 py-10" style="background-color: var(--rc-bg-dark); color: var(--rc-text-light);">
-        <div class="container mx-auto max-w-7xl px-4 text-center" style="color: #a0b0ab;">
-            <p>
+    <!-- Footer (Fundo Verde Escuro) -->
+    <footer class="mt-20 md:mt-28 py-10" style="background-color: var(--rc-bg-dark);">
+        <div class="container mx-auto max-w-7xl px-4 text-center">
+            <p style="color: var(--rc-text-muted-light);">
                 Análise de performance e projeções de mercado por Referência Capital (RC).
                 <br>
                 Valores de consórcio e rentabilidade são aproximados e dependem da administradora e do plano selecionado.
@@ -842,16 +700,14 @@
         </div>
     </footer>
 
-    <!-- HTML do Lightbox (Modal de Imagem) -->
+    <!-- Lightbox (Modal) HTML -->
     <div id="lightbox-overlay">
         <span id="lightbox-close">&times;</span>
         <img id="lightbox-image" src="" alt="Imagem em destaque">
     </div>
 
-    <!-- Script dos Gráficos (Ajustado para Cores do Tema Branco/Verde) -->
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
-            
             // --- INÍCIO DA LÓGICA DO CARROSSEL ---
             const imageUrls = [
                 "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/26c1922a-c5cf-437d-b0cd-f9b8684c3da2/509a604b-9c67-44bf-96c0-32a4a9c067c5/0.jpg",
@@ -881,27 +737,29 @@
                 "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/54d3c132-5acd-4bde-b881-ac2fdac37f18.jpg",
                 "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/4402499f-18c3-4517-b9df-17a75cb54415.jpg",
                 "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/7fada018-9784-4f41-a2ef-ab16dbc37c13.jpg",
-                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/6b8400d3-9407-46d1-82a8-e96d7e7d91bd.jpg",
+                "httpss://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/6b8400d3-9407-46d1-82a8-e96d7e7d91bd.jpg",
                 "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/38af7870-a864-499c-b247-d271ee64200e.jpg",
-                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/6ca47fa3-9be7-41ae-ab8c-07eec63a1d00.jpg",
-                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/ed9efc3a-727b-4d61-b1a4-4418b236a7e1.jpg",
+                "httpsS://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/6ca47fa3-9be7-41ae-ab8c-07eec63a1d00.jpg",
+                "httpsG://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/ed9efc3a-727b-4d61-b1a4-4418b236a7e1.jpg",
                 "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/60cc5ce2-0d26-434f-b81b-3c13851d3960.jpg",
-                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/e76ad4ef-b4e0-4f5a-9bfd-3222704d4b98.jpg",
+                "httpsS://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/e76ad4ef-b4e0-4f5a-9bfd-3222704d4b98.jpg",
                 "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/b8e5fdc5-378f-4a86-b0f2-3e323cff68ca.jpg",
                 "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/1dc9632b-cbd7-4454-94b4-b3246270a9bb.jpg",
                 "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/57c42b48-5543-4b35-a176-f7dd0a340713.jpg",
-                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/ca47d4f7-a0bf-4f61-97cf-be0ac916ffb0.jpg",
+                "httpsS://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/ca47d4f7-a0bf-4f61-97cf-be0ac916ffb0.jpg",
                 "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/a5a65287-6377-46de-9384-f123b804c622.jpg",
-                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/ba040283-5c37-4765-a1c0-6a5ccbaaf61c.jpg",
-                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/38f97893-a772-42cf-8297-d27cddc4348d.jpg",
-                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/9fcd6e67-9d72-4fb6-8986-041c11d3e76a.jpg",
-                "httpsimg.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/80a0cf62-e122-4aaa-9b49-739264867453.jpg",
-                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/d39f9f9e-5bdf-4448-85a2-83ce8623d828.jpg",
-                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/aa863a4e-261c-4d94-9583-ec48866018e0.jpg",
-                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/8a0a300f-7852-48d5-ac6e-90d406fd27f4.jpg"
-            ];
+                "httpsG://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/ba040283-5c37-4765-a1c0-6a5ccbaaf61c.jpg",
+                "httpsS://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/38f97893-a772-42cf-8297-d27cddc4348d.jpg",
+                "httpsS://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/9fcd6e67-9d72-4fb6-8986-041c11d3e76a.jpg",
+"httpsS://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/80a0cf62-e122-4aaa-9b49-739264867453.jpg",
+"httpsS://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/d39f9f9e-5bdf-4448-85a2-83ce8623d828.jpg",
+                "httpsS://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/aa863a4e-261c-4d94-9583-ec48866018e0.jpg",
+                "httpsS://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/8a0a300f-7852-48d5-ac6e-90d406fd27f4.jpg"
+            ].filter(url => url.startsWith('https://')); // Filtrar URLs mal formatadas
 
             const carousel = document.getElementById('image-carousel');
+            if (!carousel) return; // Parar se o carrossel não existir
+            
             const track = carousel.querySelector('.carousel-track');
             const dotsContainer = carousel.querySelector('.carousel-dots');
             let currentSlide = 0;
@@ -921,41 +779,36 @@
                 // Criar Slide
                 const slide = document.createElement('div');
                 slide.className = 'carousel-slide';
-                
-                // Criar Imagem
-                const img = document.createElement('img');
-                img.src = url;
-                img.alt = `Foto do empreendimento ${index + 1}`;
-                img.style.cursor = 'pointer'; // Adiciona cursor de clique
-                
-                // Adicionar evento de clique para abrir o lightbox
-                img.addEventListener('click', () => showLightbox(url));
-                
-                slide.appendChild(img);
+                slide.innerHTML = `<img src="${url}" alt="Foto ${index + 1} do empreendimento" loading="lazy">`;
+                slide.addEventListener('click', () => showLightbox(url)); // Adicionar clique para lightbox
                 track.appendChild(slide);
 
                 // Criar Ponto
-                const dot = document.createElement('div');
+                const dot = document.createElement('button');
                 dot.className = 'carousel-dot';
-                dot.dataset.index = index;
-                if (index === 0) dot.classList.add('active');
                 dot.addEventListener('click', () => {
                     goToSlide(index);
-                    resetInterval();
+                    resetInterval(); // Pausar e reiniciar o automático ao clicar no ponto
                 });
                 dotsContainer.appendChild(dot);
             });
 
             const dots = dotsContainer.querySelectorAll('.carousel-dot');
+            if (dots.length > 0) dots[0].classList.add('active'); // Ativar primeiro ponto
 
+            // --- Funções do Carrossel ---
             function goToSlide(index) {
+                // Loop
                 if (index < 0) index = imageUrls.length - 1;
                 if (index >= imageUrls.length) index = 0;
                 
                 track.style.transform = `translateX(-${index * 100}%)`;
-                dots[currentSlide].classList.remove('active');
-                dots[index].classList.add('active');
                 currentSlide = index;
+                
+                // Atualizar pontos
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === index);
+                });
             }
 
             function nextSlide() {
@@ -979,19 +832,17 @@
             function showLightbox(imageUrl) {
                 lightboxImage.src = imageUrl;
                 lightboxOverlay.style.display = 'flex';
-                clearInterval(intervalId); // Pausa o carrossel
+                clearInterval(intervalId); // Pausar carrossel
             }
 
             function hideLightbox() {
                 lightboxOverlay.style.display = 'none';
-                startInterval(); // Retoma o carrossel
+                resetInterval(); // Retomar carrossel
             }
 
-            // Eventos para fechar o Lightbox
             lightboxClose.addEventListener('click', hideLightbox);
             lightboxOverlay.addEventListener('click', (e) => {
-                // Fecha somente se clicar no fundo (overlay), não na imagem
-                if (e.target === lightboxOverlay) {
+                if (e.target === lightboxOverlay) { // Fechar se clicar fora da imagem
                     hideLightbox();
                 }
             });
@@ -1010,104 +861,6 @@
 
             startInterval(); // Iniciar o carrossel automático
             // --- FIM DA LÓGICA DO CARROSSEL ---
-
-
-            // --- INÍCIO DA LÓGICA DOS GRÁFICOS ---
-            const baseLiquido = 2580.90; // R$
-            const otimizadoLiquido = 4496.00; // R$
-            const baseCapRate = 7.96; // %
-            const otimizadoCapRate = 13.9; // %
-            const otimizadoADR = 358; // R$
-            const otimizadoOcupacao = 65; // %
-            
-            const highlightColor = '#fcb900'; // Dourado
-            const mutedColor = '#98A2B3';     // Cinza Muted
-            const textColorDark = '#1D2939';       // Texto Escuro
-            const textColorLight = '#F9FAFB';      // Texto Claro
-            const gridColorLight = '#D0D5DD';       // Cor da Borda/Grid (Fundo Claro)
-            const gridColorDark = '#2a4c48';        // Cor da Borda/Grid (Fundo Escuro)
-
-            // Gráfico 1: Donut (Receita Líquida) - (Fundo Verde Escuro)
-            const donutCtx = document.getElementById('donutChart').getContext('2d');
-            new Chart(donutCtx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Líquido Atual (Base)', 'Líquido Otimizado (RC)'],
-                    datasets: [{
-                        data: [baseLiquido, otimizadoLiquido],
-                        backgroundColor: [
-                            mutedColor, 
-                            highlightColor
-                        ],
-                        borderColor: '#1a3835', // Fundo do card (verde escuro)
-                        borderWidth: 4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: {
-                                color: textColorLight // Texto Claro
-                            }
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return ` R$ ${context.raw.toFixed(2)}`;
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-
-            // Gráfico 2: Barras (Indicadores) - (Fundo Verde Escuro)
-            const barCtx = document.getElementById('barChart').getContext('2d');
-            new Chart(barCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['Cap Rate (%)', 'ADR (R$)', 'Ocupação (%)'],
-                    datasets: [
-                        {
-                            label: 'Cenário Base (Atual)',
-                            data: [baseCapRate, 0, 0], // ADR e Ocupação não se aplicam ao long-stay
-                            backgroundColor: mutedColor,
-                            borderRadius: 4
-                        },
-                        {
-                            label: 'Cenário Otimizado (RC)',
-                            data: [otimizadoCapRate, otimizadoADR, otimizadoOcupacao],
-                            backgroundColor: highlightColor,
-                            borderRadius: 4
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: { color: mutedColor },
-                            grid: { color: gridColorDark }
-                        },
-                        x: {
-                            ticks: { color: textColorLight },
-                            grid: { color: 'transparent' }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: {
-                                color: textColorLight // Texto Claro
-                            }
-                        }
-                    }
-                }
-            });
-            // --- FIM DA LÓGICA DOS GRÁFICOS ---
         });
     </script>
 
