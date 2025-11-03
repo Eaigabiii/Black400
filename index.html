@@ -153,6 +153,112 @@
         .table-rc tbody tr:hover {
             background-color: #FFFFFF;
         }
+
+        /* Estilos do Carrossel */
+        .carousel-container {
+            width: 100%;
+            height: 24rem; /* h-96 */
+            overflow: hidden;
+            border-radius: 0.75rem; /* rounded-xl */
+            border: 1px solid var(--rc-border-light);
+            position: relative;
+        }
+        .carousel-track {
+            display: flex;
+            height: 100%;
+            transition: transform 0.5s ease-in-out;
+        }
+        .carousel-slide {
+            min-width: 100%;
+            height: 100%;
+        }
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .carousel-dots {
+            position: absolute;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+        }
+        .carousel-dot {
+            width: 0.75rem;
+            height: 0.75rem;
+            border-radius: 9999px;
+            background-color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .carousel-dot.active {
+            background-color: rgba(255, 255, 255, 1);
+        }
+        /* Botões de Navegação (Setas) */
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            background-color: rgba(0, 0, 0, 0.3);
+            color: white;
+            border: none;
+            border-radius: 9999px; /* rounded-full */
+            width: 2.5rem; /* w-10 */
+            height: 2.5rem; /* h-10 */
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+        .carousel-btn:hover {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        #carousel-prev {
+            left: 0.5rem; /* Lado esquerdo */
+        }
+        #carousel-next {
+            right: 0.5rem; /* Lado direito */
+        }
+
+        /* Estilos do Lightbox (Modal de Imagem) */
+        #lightbox-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: none; /* Inicia escondido */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+        #lightbox-image {
+            max-width: 90vw;
+            max-height: 90vh;
+            object-fit: contain;
+            box-shadow: 0 0 40px rgba(0,0,0,0.5);
+        }
+        #lightbox-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 2rem;
+            font-size: 2.5rem;
+            color: #FFF;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        #lightbox-close:hover {
+            transform: scale(1.1);
+        }
+
+
     </style>
 </head>
 <body class="antialiased">
@@ -173,7 +279,7 @@
                 <!-- Menu de Navegação Rápida (Simplificado) -->
                 <nav>
                     <div class="flex flex-wrap gap-4">
-                        <a href="#contexto" class="text-sm font-medium hover:highlight-gold transition-all duration-300" style="color: var(--rc-text-light);">Contexto</a>
+                        <!-- <a href="#contexto" class="text-sm font-medium hover:highlight-gold transition-all duration-300" style="color: var(--rc-text-light);">Contexto</a> -->
                         <a href="#demanda" class="text-sm font-medium hover:highlight-gold transition-all duration-300" style="color: var(--rc-text-light);">Demanda</a>
                         <a href="#estrategia" class="text-sm font-medium hover:highlight-gold transition-all duration-300" style="color: var(--rc-text-light);">Estratégia</a>
                         <a href="#performance" class="text-sm font-medium hover:highlight-gold transition-all duration-300" style="color: var(--rc-text-light);">Performance</a>
@@ -200,9 +306,21 @@
         <!-- 1. Fotos do Empreendimento e Detalhes (Fundo Branco) -->
         <section id="fotos">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
-                <!-- Imagem -->
-                <div class="w-full h-96 overflow-hidden rounded-xl border" style="border-color: var(--rc-border-light);">
-                    <img src="https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/36bec1db-64fb-4423-9f5f-1bc50eb1bd87.jpg" alt="Fachada do empreendimento IS Perdizes" class="w-full h-full object-cover shadow-lg rounded-xl">
+                <!-- Carrossel de Imagens -->
+                <div id="image-carousel" class="carousel-container shadow-lg">
+                    <div class="carousel-track">
+                        <!-- As imagens serão injetadas aqui pelo JS -->
+                    </div>
+                    <div class="carousel-dots">
+                        <!-- Os pontos/indicadores serão injetados aqui -->
+                    </div>
+                    <!-- Botões de Navegação -->
+                    <button id="carousel-prev" class="carousel-btn">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <button id="carousel-next" class="carousel-btn">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
                 </div>
 
                 <!-- Detalhes do Imóvel (Texto Escuro) -->
@@ -241,36 +359,8 @@
             </div>
         </section>
 
-        <!-- 2. Avaliação (Contexto e Localização Estratégica) (Fundo Verde Escuro) -->
-        <section id="contexto" class="section-dark">
-            <div class="container mx-auto max-w-7xl px-4">
-                <h2 class="section-title">Contexto e Localização <span class="highlight-gold">Estratégica</span></h2>
-                <div class="content-card max-w-4xl mx-auto">
-                    <ul class="space-y-4 text-lg">
-                        <li class="flex items-start gap-3">
-                            <i class="fa-solid fa-school w-5 text-center highlight-gold mt-1"></i>
-                            Endereço estratégico atrás da <strong class="highlight-gold">PUC-SP</strong> (campus Perdizes) — polo acadêmico consolidado.
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <i class="fa-solid fa-subway w-5 text-center highlight-gold mt-1"></i>
-                            Próximo à futura <strong class="highlight-gold">Estação Perdizes / SESC Pompeia (Linha 6–Laranja)</strong> — acesso direto ao eixo corporativo Paulista–Faria Lima.
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <i class="fa-solid fa-umbrella-beach w-5 text-center highlight-gold mt-1"></i>
-                            Vizinhança de lazer e cultura: <strong class="highlight-gold">Sesc Pompeia, Allianz Parque e Shopping Bourbon.</strong>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <i class="fa-solid fa-users w-5 text-center highlight-gold mt-1"></i>
-                            <strong class="highlight-gold">Alta densidade de short/medium stay</strong> devido a estudantes, profissionais de saúde, executivos e turistas.
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <i class="fa-solid fa-building-columns w-5 text-center highlight-gold mt-1"></i>
-                            Bairro consolidado, com <strong class="highlight-gold">baixa vacância e alta liquidez</strong> no mercado de revenda.
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </section>
+        <!-- [REMOVIDO] 2. Avaliação (Contexto e Localização Estratégica) (Fundo Verde Escuro) -->
+        <!-- <section id="contexto" class="section-dark"> ... </section> -->
 
         <!-- 3. Tese (Placeholder) -->
         <section id="tese" class="section-light hidden">
@@ -387,7 +477,7 @@
                     <i class="fa-brands fa-airbnb text-4xl mb-4"></i>
                     <h3 class="text-xl font-semibold" style="color: var(--rc-text-light);">Exemplo Airbnb na Região</h3>
                     <p>Link de exemplo de um anúncio similar na mesma região para benchmark de preço e ocupação.</p>
-                    <a href="#" class="mt-4 px-4 py-2 rounded-md font-semibold highlight-gold" style="background-color: #fcb90020;">Ver Exemplo</a>
+                    <a href="https://www.airbnb.com.br/rooms/1087068082661504567?source_impression_id=p3_1762196599_P3nMB9_esqaWUFWg" target="_blank" rel="noopener noreferrer" class="mt-4 px-4 py-2 rounded-md font-semibold highlight-gold" style="background-color: #fcb90020;">Ver Exemplo</a>
                 </div>
             </div>
         </section>
@@ -409,7 +499,7 @@
                 <h3 class="text-xl font-semibold highlight-gold mb-4">Regra RC (ajustada):</h3>
                 <ul class="space-y-2 text-md">
                     <li><i class="fa-solid fa-circle-check highlight-gold mr-2"></i> <strong>Crédito alvo:</strong> R$ 400.000</li>
-                    <li><i class="fa-solid fa-circle-check highlight-gold mr-2"></i> <strong>Fórmula:</strong> Crédito × 0,7 = saldo coberto → 400.000 × 0,7 = R$ 280.000</li>
+                    <!-- <li><i class="fa-solid fa-circle-check highlight-gold mr-2"></i> <strong>Fórmula:</strong> Crédito × 0,7 = saldo coberto → 400.000 × 0,7 = R$ 280.000</li> -->
                     <li><i class="fa-solid fa-circle-check highlight-gold mr-2"></i> <strong>Capital próprio (R$ 150–200 mil):</strong> lance + custos + ITBI/cartório + reserva.</li>
                     <li><i class="fa-solid fa-circle-check highlight-gold mr-2"></i> <strong>Valorização Média:</strong> 6% a.a. (usada na projeção de reajuste de parcela).</li>
                 </ul>
@@ -432,12 +522,12 @@
                             <tr>
                                 <td>Carta contemplada</td>
                                 <td>R$ 400.000</td>
-                                <td>Lance de 30–40% (R$ 120–160 mil)</td>
+                                <td>de 120 a 200k</td>
                             </tr>
                             <tr>
-                                <td>Prestação</td>
-                                <td>R$ 1.856,70/mês</td>
-                                <td>Base RC</td>
+                                <td>Parcela pós contemplação</td>
+                                <td>de 1700 a 2200</td>
+                                <td>Projeção</td>
                             </tr>
                             <tr>
                                 <td>Equity alocado</td>
@@ -447,6 +537,9 @@
                         </tbody>
                     </table>
                 </div>
+                <p class="mt-2 text-sm text-right" style="color: var(--rc-text-muted);">
+                    <i class="fa-solid fa-info-circle mr-1"></i> Valores de parcela e capital são projeções e podem mudar.
+                </p>
                 <p class="mt-4 text-md highlight-gold font-semibold">
                     <i class="fa-solid fa-book-reader mr-2"></i> Leitura RC: Permite alavancar o ativo pronto com ticket reduzido, usando consórcio contemplado e rentabilidade imediata.
                 </p>
@@ -461,16 +554,17 @@
                         Cenário A
                     </span>
                     <h3 class="text-2xl font-bold mt-4" style="color: var(--rc-text-dark);">Manter Contrato Atual (Yuca)</h3>
+                    <p class="text-lg -mt-1" style="color: var(--rc-text-muted);">(Contrato vigente até Out/2026)</p>
                     <div class="mt-6">
                         <p class="text-5xl md:text-6xl font-extrabold highlight-gold">~5.8<span class="text-4xl">%</span></p>
                         <p class="text-lg font-medium">Cash-on-cash a.a. (com R$150k)</p>
-                        <p class="text-2xl font-bold mt-1" style="color: var(--rc-text-muted);">Fluxo R$ 724,20/mês</p>
+                        <!-- <p class="text-2xl font-bold mt-1" style="color: var(--rc-text-muted);">Fluxo R$ 724,20/mês</p> -->
                     </div>
                     <hr class="my-6" style="border-color: var(--rc-border-light);"/>
                     <ul class="space-y-3">
                         <li><strong>Líquido:</strong> R$ 2.580,90/mês</li>
-                        <li><strong>Cap rate:</strong> 7,96% a.a.</li>
-                        <li><strong>Após parcela consórcio (400k):</strong> R$ 724,20/mês</li>
+                        <!-- <li><strong>Cap rate:</strong> 7,96% a.a.</li> -->
+                        <!-- <li><strong>Após parcela consórcio (400k):</strong> R$ 724,20/mês</li> -->
                         <li><strong>Cash-on-cash (R$ 150k):</strong> 5,8% a.a.</li>
                         <li><strong>Cash-on-cash (R$ 200k):</strong> 4,3% a.a.</li>
                     </ul>
@@ -748,10 +842,177 @@
         </div>
     </footer>
 
+    <!-- HTML do Lightbox (Modal de Imagem) -->
+    <div id="lightbox-overlay">
+        <span id="lightbox-close">&times;</span>
+        <img id="lightbox-image" src="" alt="Imagem em destaque">
+    </div>
+
     <!-- Script dos Gráficos (Ajustado para Cores do Tema Branco/Verde) -->
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
-            // Dados (Base vs Otimizado RC)
+            
+            // --- INÍCIO DA LÓGICA DO CARROSSEL ---
+            const imageUrls = [
+                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/26c1922a-c5cf-437d-b0cd-f9b8684c3da2/509a604b-9c67-44bf-96c0-32a4a9c067c5/0.jpg",
+                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/26c1922a-c5cf-437d-b0cd-f9b8684c3da2/509a604b-9c67-44bf-96c0-32a4a9c067c5/1.jpg",
+                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/26c1922a-c5cf-437d-b0cd-f9b8684c3da2/509a604b-9c67-44bf-96c0-32a4a9c067c5/2.jpg",
+                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/26c1922a-c5cf-437d-b0cd-f9b8684c3da2/509a604b-9c67-44bf-96c0-32a4a9c067c5/3.jpg",
+                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/26c1922a-c5cf-437d-b0cd-f9b8684c3da2/509a604b-9c67-44bf-96c0-32a4a9c067c5/4.jpg",
+                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/26c1922a-c5cf-437d-b0cd-f9b8684c3da2/509a604b-9c67-44bf-96c0-32a4a9c067c5/5.jpg",
+                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/26c1922a-c5cf-437d-b0cd-f9b8684c3da2/509a604b-9c67-44bf-96c0-32a4a9c067c5/6.jpg",
+                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/26c1922a-c5cf-437d-b0cd-f9b8684c3da2/68f8b8b5-23d1-4b07-842f-ad7e0783aa58/0.jpg",
+                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/26c1922a-c5cf-437d-b0cd-f9b8684c3da2/68f8b8b5-23d1-4b07-842f-ad7e0783aa58/1.jpg",
+                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/26c1922a-c5cf-437d-b0cd-f9b8684c3da2/68f8b8b5-23d1-4b07-842f-ad7e0783aa58/2.jpg",
+                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/26c1922a-c5cf-437d-b0cd-f9b8684c3da2/68f8b8b5-23d1-4b07-842f-ad7e0783aa58/3.jpg",
+                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/26c1922a-c5cf-437d-b0cd-f9b8684c3da2/68f8b8b5-23d1-4b07-842f-ad7e0783aa58/4.jpg",
+                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/26c1922a-c5cf-437d-b0cd-f9b8684c3da2/68f8b8b5-23d1-4b07-842f-ad7e0783aa58/5.jpg",
+                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/26c1922a-c5cf-437d-b0cd-f9b8684c3da2/9a0dc1a9-307e-4113-8486-7e3c88077332/0.jpg",
+                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/26c1922a-c5cf-437d-b0cd-f9b8684c3da2/9a0dc1a9-307e-4113-8486-7e3c88077332/1.jpg",
+                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/26c1922a-c5cf-437d-b0cd-f9b8684c3da2/9a0dc1a9-307e-4113-8486-7e3c88077332/2.jpg",
+                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/26c1922a-c5cf-437d-b0cd-f9b8684c3da2/9a0dc1a9-307e-4113-8486-7e3c88077332/3.jpg",
+                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/26c1922a-c5cf-437d-b0cd-f9b8684c3da2/9a0dc1a9-307e-4113-8486-7e3c88077332/4.jpg",
+                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/26c1922a-c5cf-437d-b0cd-f9b8684c3da2/85e45ccd-bd20-45c4-a27e-db301705880f/0.jpg",
+                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/26c1922a-c5cf-437d-b0cd-f9b8684c3da2/85e45ccd-bd20-45c4-a27e-db301705880f/1.jpg",
+                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/26c1922a-c5cf-437d-b0cd-f9b8684c3da2/85e45ccd-bd20-45c4-a27e-db301705880f/2.jpg",
+                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/159c0c18-909b-4b83-b753-c01051a4ce59.png",
+                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/378189ce-5e15-4bc6-b959-82fc678681b4.jpg",
+                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/80c77b5b-18d4-4adc-ae80-18e2d2fdc592.jpg",
+                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/54d3c132-5acd-4bde-b881-ac2fdac37f18.jpg",
+                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/4402499f-18c3-4517-b9df-17a75cb54415.jpg",
+                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/7fada018-9784-4f41-a2ef-ab16dbc37c13.jpg",
+                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/6b8400d3-9407-46d1-82a8-e96d7e7d91bd.jpg",
+                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/38af7870-a864-499c-b247-d271ee64200e.jpg",
+                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/6ca47fa3-9be7-41ae-ab8c-07eec63a1d00.jpg",
+                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/ed9efc3a-727b-4d61-b1a4-4418b236a7e1.jpg",
+                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/60cc5ce2-0d26-434f-b81b-3c13851d3960.jpg",
+                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/e76ad4ef-b4e0-4f5a-9bfd-3222704d4b98.jpg",
+                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/b8e5fdc5-378f-4a86-b0f2-3e323cff68ca.jpg",
+                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/1dc9632b-cbd7-4454-94b4-b3246270a9bb.jpg",
+                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/57c42b48-5543-4b35-a176-f7dd0a340713.jpg",
+                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/ca47d4f7-a0bf-4f61-97cf-be0ac916ffb0.jpg",
+                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/a5a65287-6377-46de-9384-f123b804c622.jpg",
+                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/ba040283-5c37-4765-a1c0-6a5ccbaaf61c.jpg",
+                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/38f97893-a772-42cf-8297-d27cddc4348d.jpg",
+                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/9fcd6e67-9d72-4fb6-8986-041c11d3e76a.jpg",
+                "httpsimg.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/80a0cf62-e122-4aaa-9b49-739264867453.jpg",
+                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/d39f9f9e-5bdf-4448-85a2-83ce8623d828.jpg",
+                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/aa863a4e-261c-4d94-9583-ec48866018e0.jpg",
+                "https://img.imageboss.me/production-yuca-real-estate-assets/width/1200/compression:false/b8bc4146-eda8-4a5c-8988-637a1a574f5b/8a0a300f-7852-48d5-ac6e-90d406fd27f4.jpg"
+            ];
+
+            const carousel = document.getElementById('image-carousel');
+            const track = carousel.querySelector('.carousel-track');
+            const dotsContainer = carousel.querySelector('.carousel-dots');
+            let currentSlide = 0;
+            let intervalId;
+
+            // Elementos do Lightbox
+            const lightboxOverlay = document.getElementById('lightbox-overlay');
+            const lightboxImage = document.getElementById('lightbox-image');
+            const lightboxClose = document.getElementById('lightbox-close');
+
+            // Botões de Navegação do Carrossel
+            const prevButton = document.getElementById('carousel-prev');
+            const nextButton = document.getElementById('carousel-next');
+
+            // Injetar slides e pontos
+            imageUrls.forEach((url, index) => {
+                // Criar Slide
+                const slide = document.createElement('div');
+                slide.className = 'carousel-slide';
+                
+                // Criar Imagem
+                const img = document.createElement('img');
+                img.src = url;
+                img.alt = `Foto do empreendimento ${index + 1}`;
+                img.style.cursor = 'pointer'; // Adiciona cursor de clique
+                
+                // Adicionar evento de clique para abrir o lightbox
+                img.addEventListener('click', () => showLightbox(url));
+                
+                slide.appendChild(img);
+                track.appendChild(slide);
+
+                // Criar Ponto
+                const dot = document.createElement('div');
+                dot.className = 'carousel-dot';
+                dot.dataset.index = index;
+                if (index === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => {
+                    goToSlide(index);
+                    resetInterval();
+                });
+                dotsContainer.appendChild(dot);
+            });
+
+            const dots = dotsContainer.querySelectorAll('.carousel-dot');
+
+            function goToSlide(index) {
+                if (index < 0) index = imageUrls.length - 1;
+                if (index >= imageUrls.length) index = 0;
+                
+                track.style.transform = `translateX(-${index * 100}%)`;
+                dots[currentSlide].classList.remove('active');
+                dots[index].classList.add('active');
+                currentSlide = index;
+            }
+
+            function nextSlide() {
+                goToSlide(currentSlide + 1);
+            }
+
+            function prevSlide() {
+                goToSlide(currentSlide - 1);
+            }
+
+            function startInterval() {
+                intervalId = setInterval(nextSlide, 3000); // Mudar slide a cada 3 segundos
+            }
+
+            function resetInterval() {
+                clearInterval(intervalId);
+                startInterval();
+            }
+
+            // --- Funções do Lightbox ---
+            function showLightbox(imageUrl) {
+                lightboxImage.src = imageUrl;
+                lightboxOverlay.style.display = 'flex';
+                clearInterval(intervalId); // Pausa o carrossel
+            }
+
+            function hideLightbox() {
+                lightboxOverlay.style.display = 'none';
+                startInterval(); // Retoma o carrossel
+            }
+
+            // Eventos para fechar o Lightbox
+            lightboxClose.addEventListener('click', hideLightbox);
+            lightboxOverlay.addEventListener('click', (e) => {
+                // Fecha somente se clicar no fundo (overlay), não na imagem
+                if (e.target === lightboxOverlay) {
+                    hideLightbox();
+                }
+            });
+
+            // Adicionar eventos aos botões de seta
+            prevButton.addEventListener('click', () => {
+                prevSlide();
+                resetInterval();
+            });
+
+            nextButton.addEventListener('click', () => {
+                nextSlide();
+                resetInterval();
+            });
+
+
+            startInterval(); // Iniciar o carrossel automático
+            // --- FIM DA LÓGICA DO CARROSSEL ---
+
+
+            // --- INÍCIO DA LÓGICA DOS GRÁFICOS ---
             const baseLiquido = 2580.90; // R$
             const otimizadoLiquido = 4496.00; // R$
             const baseCapRate = 7.96; // %
@@ -846,10 +1107,14 @@
                     }
                 }
             });
+            // --- FIM DA LÓGICA DOS GRÁFICOS ---
         });
     </script>
 
 </body>
 </html>
+
+
+
 
 
